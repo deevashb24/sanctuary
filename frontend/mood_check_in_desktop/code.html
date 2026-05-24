@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mood Check-in - Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#004b73",
+                      "soft-white": "#F8FAFC",
+                      "inverse-primary": "#036496",
+                      "surface-tint": "#92ccff",
+                      "on-tertiary": "#3e2e00",
+                      "secondary-container": "#007920",
+                      "background-deep": "#122B61",
+                      "tertiary-fixed": "#ffdf93",
+                      "on-secondary": "#00390a",
+                      "background-ambient": "#4B6CC9",
+                      "background": "#001719",
+                      "ink-dark": "#0D2527",
+                      "surface-dim": "#001719",
+                      "surface-container-high": "#002f33",
+                      "secondary": "#76dd76",
+                      "on-tertiary-fixed-variant": "#594400",
+                      "error-container": "#93000a",
+                      "surface-container-highest": "#003b40",
+                      "surface": "#001719",
+                      "tertiary-container": "#e3b320",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed-variant": "#005313",
+                      "on-primary": "#003351",
+                      "on-surface": "#b8ebf1",
+                      "secondary-fixed": "#92fa8f",
+                      "inverse-surface": "#b8ebf1",
+                      "inverse-on-surface": "#00363b",
+                      "primary-fixed": "#cce5ff",
+                      "on-surface-variant": "#c0c7d0",
+                      "on-primary-fixed": "#001e31",
+                      "surface-container-low": "#002022",
+                      "on-primary-container": "#004e77",
+                      "on-tertiary-container": "#5c4700",
+                      "primary-fixed-dim": "#92ccff",
+                      "on-secondary-fixed": "#002204",
+                      "surface-container-lowest": "#001113",
+                      "primary": "#b2daff",
+                      "outline": "#8a919a",
+                      "secondary-fixed-dim": "#76dd76",
+                      "tertiary": "#ffcf4a",
+                      "surface-bright": "#034045",
+                      "primary-container": "#7cc0f8",
+                      "surface-container": "#002427",
+                      "tertiary-fixed-dim": "#f1c02f",
+                      "surface-variant": "#003b40",
+                      "on-background": "#b8ebf1",
+                      "on-error-container": "#ffdad6",
+                      "on-error": "#690005",
+                      "outline-variant": "#40484f",
+                      "on-secondary-container": "#9bff97",
+                      "on-tertiary-fixed": "#241a00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "base": "8px",
+                      "stack-sm": "12px",
+                      "margin-mobile": "24px",
+                      "stack-md": "24px",
+                      "stack-lg": "48px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "title-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-caps": [
+                              "Space Mono"
+                      ],
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "title-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: theme('colors.background-deep');
+            background-image: radial-gradient(circle at 50% 50%, theme('colors.background-ambient') 0%, theme('colors.background-deep') 100%);
+            background-attachment: fixed;
+            transition: background-position 0.5s ease-out;
+        }
+        
+        .organic-shape {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1.5px solid rgba(248, 250, 252, 0.1);
+        }
+        
+        .organic-shape:hover {
+            transform: scale(1.05) translateY(-5px);
+            filter: brightness(1.2);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .organic-shape.selected {
+            transform: scale(1.1);
+            border-color: theme('colors.soft-white');
+            box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        /* Blob specific styling */
+        .blob-1 { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; animation: morph 8s ease-in-out infinite; }
+        .blob-2 { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation: morph 9s ease-in-out infinite reverse; }
+        .blob-3 { border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%; animation: morph 7s ease-in-out infinite; }
+        .blob-4 { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; animation: morph 10s ease-in-out infinite alternate; }
+        .blob-5 { border-radius: 80% 20% 50% 50% / 50% 50% 50% 50%; animation: morph 8.5s ease-in-out infinite; }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+            67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; }
+        }
+        
+        .glass-panel {
+            background: rgba(0, 32, 34, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(248, 250, 252, 0.1);
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen overflow-hidden flex">
+<!-- SideNavBar (Desktop Only) -->
+<nav class="bg-surface-container-low/40 backdrop-blur-xl border-r border-soft-white/10 h-screen w-64 fixed left-0 top-0 flex flex-col py-stack-lg gap-stack-md z-50 hidden md:flex">
+<div class="px-margin-desktop/2 mb-stack-md flex flex-col items-start gap-4">
+<img alt="User's Zen Avatar" class="w-16 h-16 rounded-full border-2 border-primary/20 object-cover" data-alt="A tranquil digital illustration of a zen avatar or mindful character in a serene, atmospheric setting. The art style is minimalist with soft edges and organic curves. Lighting is low-key with gentle luminescence. The color palette incorporates deep teal, soft white, and subtle accents. The mood is calm, empathetic, and approachable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8T8Ygs2Vn8L7rE6lI2ZrEotZeBanXXtQ0_Jrry24sQ9SMnfwKT5ec2mfDlFwDW0vY7aGsKLdytDjLkabE6kqNjjeNgIegkj1gjJvpHVEoMwydMUfRjwUJ0hUKo8OvzlRBAiov3xGGBKDWi9susn0LGtPcvgwsCNcvUHCvkLx2yP-4RZKQNnOcnsqIhYxcmiSooNHT9mgz973N7EoPOH891Z5WlYVsKJEsOD2XAek_DmvSf04u-whd7RMiDNTpGhj5ER-3KRZbJHs"/>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Sanctuary</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Stay Grounded</p>
+</div>
+</div>
+<div class="px-margin-desktop/2 mb-stack-md">
+<button class="w-full py-3 px-4 bg-primary text-ink-dark rounded-full font-title-md text-title-md hover:bg-primary-fixed-dim transition-colors duration-300 shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">self_improvement</span>
+                Take a Breath
+            </button>
+</div>
+<div class="flex-1 flex flex-col gap-2 w-full">
+<a class="flex items-center gap-4 py-3 pl-margin-desktop/2 text-on-surface-variant/80 hover:text-primary hover:bg-primary-container/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">spa</span>
+<span class="font-label-caps text-label-caps">Daily Flow</span>
+</a>
+<a class="flex items-center gap-4 py-3 pl-margin-desktop/2 text-on-surface-variant/80 hover:text-primary hover:bg-primary-container/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">self_care</span>
+<span class="font-label-caps text-label-caps">Meditation</span>
+</a>
+<a class="flex items-center gap-4 py-3 pl-margin-desktop/2 text-on-surface-variant/80 hover:text-primary hover:bg-primary-container/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-label-caps text-label-caps">Habits</span>
+</a>
+<a class="flex items-center gap-4 py-3 pl-margin-desktop/2 border-l-4 border-primary text-primary-fixed-dim font-bold hover:bg-primary-container/10 transition-all duration-200 opacity-80 translate-x-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-caps text-label-caps">Reflection</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-2 w-full">
+<a class="flex items-center gap-4 py-3 pl-margin-desktop/2 text-on-surface-variant/80 hover:text-primary hover:bg-primary-container/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+<a class="flex items-center gap-4 py-3 pl-margin-desktop/2 text-on-surface-variant/80 hover:text-primary hover:bg-primary-container/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label-caps text-label-caps">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-0 md:ml-64 flex-1 h-screen overflow-y-auto overflow-x-hidden relative flex flex-col" id="main-canvas">
+<!-- Interactive Mood Area -->
+<div class="flex-1 flex flex-col items-center justify-center p-margin-desktop relative z-10 min-h-[614px]">
+<header class="text-center mb-stack-lg animate-fade-in-up">
+<h1 class="font-display-lg text-display-lg text-soft-white mb-2">How are you feeling?</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Select the shape that resonates with you today.</p>
+</header>
+<!-- Organic Shape Constellation -->
+<div class="relative w-full max-w-4xl h-[400px] flex items-center justify-center">
+<!-- Joy / Radiant -->
+<div class="absolute top-[10%] left-[20%] group flex flex-col items-center">
+<div class="organic-shape blob-1 w-32 h-32 bg-tertiary/80 flex items-center justify-center shadow-lg shadow-tertiary/20" onclick="selectMood(this, 'Radiant')">
+<span class="material-symbols-outlined text-4xl text-on-tertiary" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+</div>
+<span class="mt-4 font-label-caps text-label-caps text-tertiary-fixed opacity-0 group-hover:opacity-100 transition-opacity duration-300">Radiant</span>
+</div>
+<!-- Calm / Balanced -->
+<div class="absolute top-[40%] left-[5%] group flex flex-col items-center">
+<div class="organic-shape blob-2 w-40 h-36 bg-secondary-container/70 flex items-center justify-center shadow-lg shadow-secondary-container/20" onclick="selectMood(this, 'Calm')">
+<span class="material-symbols-outlined text-5xl text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<span class="mt-4 font-label-caps text-label-caps text-secondary-fixed opacity-0 group-hover:opacity-100 transition-opacity duration-300">Calm</span>
+</div>
+<!-- Neutral / Okay -->
+<div class="absolute top-[30%] left-[45%] group flex flex-col items-center">
+<div class="organic-shape blob-3 w-48 h-48 bg-primary/60 flex items-center justify-center shadow-lg shadow-primary/20" onclick="selectMood(this, 'Centered')">
+<span class="material-symbols-outlined text-6xl text-on-primary" style="font-variation-settings: 'FILL' 1;">trip_origin</span>
+</div>
+<span class="mt-4 font-label-caps text-label-caps text-primary-fixed opacity-0 group-hover:opacity-100 transition-opacity duration-300">Centered</span>
+</div>
+<!-- Anxious / Restless -->
+<div class="absolute top-[20%] right-[20%] group flex flex-col items-center">
+<div class="organic-shape blob-4 w-36 h-36 bg-error-container/60 flex items-center justify-center shadow-lg shadow-error-container/20" onclick="selectMood(this, 'Restless')">
+<span class="material-symbols-outlined text-5xl text-on-error-container" style="font-variation-settings: 'FILL' 1;">air</span>
+</div>
+<span class="mt-4 font-label-caps text-label-caps text-error opacity-0 group-hover:opacity-100 transition-opacity duration-300">Restless</span>
+</div>
+<!-- Low / Heavy -->
+<div class="absolute top-[55%] right-[10%] group flex flex-col items-center">
+<div class="organic-shape blob-5 w-40 h-40 bg-surface-container-highest/80 flex items-center justify-center shadow-lg shadow-surface-container-highest/20" onclick="selectMood(this, 'Heavy')">
+<span class="material-symbols-outlined text-5xl text-on-surface" style="font-variation-settings: 'FILL' 1;">cloud</span>
+</div>
+<span class="mt-4 font-label-caps text-label-caps text-on-surface opacity-0 group-hover:opacity-100 transition-opacity duration-300">Heavy</span>
+</div>
+</div>
+<p class="h-8 mt-stack-md font-title-md text-title-md text-soft-white opacity-0 transition-opacity duration-300" id="selected-mood-text">Feeling <span class="text-primary-fixed-dim" id="mood-label"></span></p>
+</div>
+<!-- Reflection Input Area (Docked Bottom Desktop) -->
+<div class="glass-panel w-full max-w-4xl mx-auto rounded-t-[2rem] p-margin-desktop mt-auto relative z-20">
+<div class="flex flex-col gap-stack-md">
+<div class="relative">
+<label class="sr-only" for="reflection">Add a reflection</label>
+<textarea class="w-full bg-surface-container-lowest/50 border border-soft-white/10 rounded-xl p-6 font-body-lg text-body-lg text-on-background placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent resize-none transition-all duration-300" id="reflection" placeholder="Add a reflection... (Optional)" rows="3"></textarea>
+<!-- Decorative hand-drawn element -->
+<svg class="absolute -top-4 -left-4 w-8 h-8 text-primary/40 opacity-50" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M12 2L15 8L22 9L17 14L18 21L12 17L6 21L7 14L2 9L9 8L12 2Z" stroke-dasharray="4 4"></path>
+</svg>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex gap-2">
+<button class="p-2 rounded-full bg-surface-container/50 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-colors" title="Add Image">
+<span class="material-symbols-outlined">image</span>
+</button>
+<button class="p-2 rounded-full bg-surface-container/50 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-colors" title="Voice Note">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+<button class="py-3 px-8 bg-primary text-ink-dark rounded-full font-title-md text-title-md font-medium hover:bg-primary-fixed-dim hover:scale-105 transition-all duration-300 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed" id="save-btn">
+                        Save Check-in
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Interactive Background Effect based on mouse movement
+        const mainCanvas = document.getElementById('main-canvas');
+        mainCanvas.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            // Shift the radial gradient center slightly based on mouse
+            document.body.style.backgroundPosition = `${x * 20}% ${y * 20}%`;
+        });
+
+        // Mood Selection Logic
+        function selectMood(element, moodName) {
+            // Remove selected class from all shapes
+            const shapes = document.querySelectorAll('.organic-shape');
+            shapes.forEach(shape => shape.classList.remove('selected'));
+            
+            // Add selected class to clicked shape
+            element.classList.add('selected');
+            
+            // Update Text
+            const textContainer = document.getElementById('selected-mood-text');
+            const label = document.getElementById('mood-label');
+            
+            label.textContent = moodName;
+            textContainer.classList.remove('opacity-0');
+            
+            // Enable save button (assuming it might be disabled initially in a real app, though left enabled here for UX)
+            const saveBtn = document.getElementById('save-btn');
+            saveBtn.classList.remove('opacity-50');
+            
+            // Optional: Subtle background color shift based on mood
+            let bgShiftColor = '';
+            switch(moodName) {
+                case 'Radiant': bgShiftColor = 'rgba(255, 207, 74, 0.05)'; break;
+                case 'Calm': bgShiftColor = 'rgba(0, 121, 32, 0.05)'; break;
+                case 'Centered': bgShiftColor = 'rgba(178, 218, 255, 0.05)'; break;
+                case 'Restless': bgShiftColor = 'rgba(147, 0, 10, 0.05)'; break;
+                case 'Heavy': bgShiftColor = 'rgba(0, 59, 64, 0.05)'; break;
+            }
+            
+            if(bgShiftColor) {
+                // simple overlay effect on body or main
+                mainCanvas.style.boxShadow = `inset 0 0 100px ${bgShiftColor}`;
+            }
+        }
+    </script>
+</body></html>

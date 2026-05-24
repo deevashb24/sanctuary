@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sanctuary - Home Dashboard</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004b73",
+                        "soft-white": "#F8FAFC",
+                        "inverse-primary": "#036496",
+                        "surface-tint": "#92ccff",
+                        "on-tertiary": "#3e2e00",
+                        "secondary-container": "#007920",
+                        "background-deep": "#122B61",
+                        "tertiary-fixed": "#ffdf93",
+                        "on-secondary": "#00390a",
+                        "background-ambient": "#4B6CC9",
+                        "background": "#001719",
+                        "ink-dark": "#0D2527",
+                        "surface-dim": "#001719",
+                        "surface-container-high": "#002f33",
+                        "secondary": "#76dd76",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#003b40",
+                        "surface": "#001719",
+                        "tertiary-container": "#e3b320",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#005313",
+                        "on-primary": "#003351",
+                        "on-surface": "#b8ebf1",
+                        "secondary-fixed": "#92fa8f",
+                        "inverse-surface": "#b8ebf1",
+                        "inverse-on-surface": "#00363b",
+                        "primary-fixed": "#cce5ff",
+                        "on-surface-variant": "#c0c7d0",
+                        "on-primary-fixed": "#001e31",
+                        "surface-container-low": "#002022",
+                        "on-primary-container": "#004e77",
+                        "on-tertiary-container": "#5c4700",
+                        "primary-fixed-dim": "#92ccff",
+                        "on-secondary-fixed": "#002204",
+                        "surface-container-lowest": "#001113",
+                        "primary": "#b2daff",
+                        "outline": "#8a919a",
+                        "secondary-fixed-dim": "#76dd76",
+                        "tertiary": "#ffcf4a",
+                        "surface-bright": "#034045",
+                        "primary-container": "#7cc0f8",
+                        "surface-container": "#002427",
+                        "tertiary-fixed-dim": "#f1c02f",
+                        "surface-variant": "#003b40",
+                        "on-background": "#b8ebf1",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005",
+                        "outline-variant": "#40484f",
+                        "on-secondary-container": "#9bff97",
+                        "on-tertiary-fixed": "#241a00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "base": "8px",
+                        "stack-sm": "12px",
+                        "margin-mobile": "24px",
+                        "stack-md": "24px",
+                        "stack-lg": "48px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "label-caps": ["Space Mono"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400" }]
+                    },
+                    "animation": {
+                        "breathe": "breathe 8s ease-in-out infinite",
+                        "aura-pulse": "aura 6s ease-in-out infinite alternate"
+                    },
+                    "keyframes": {
+                        "breathe": {
+                            "0%, 100%": { transform: "scale(1)" },
+                            "50%": { transform: "scale(1.05)" }
+                        },
+                        "aura": {
+                            "0%": { opacity: "0.4", transform: "scale(1.1)" },
+                            "100%": { opacity: "0.8", transform: "scale(1.3)" }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Base styles to ensure dark mode text colors map correctly if not explicitly set */
+        body {
+            color: theme('colors.on-background');
+        }
+        /* Custom scrollbar for horizontal carousels */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Glassmorphism utility */
+        .glass-panel {
+            background-color: rgba(0, 32, 34, 0.4); /* surface-container-low approx */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(248, 250, 252, 0.05); /* soft-white */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#001719] via-[#002f33] to-[#0D2527] min-h-screen text-on-surface antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- App Container -->
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar (from JSON) -->
+<nav class="hidden md:flex flex-col h-full py-stack-lg gap-stack-md bg-surface-container-low/60 dark:bg-surface-container-low/40 backdrop-blur-xl h-screen w-64 fixed left-0 top-0 border-r border-soft-white/10 z-50">
+<!-- Header -->
+<div class="px-6 mb-8 flex flex-col items-center text-center gap-2">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/20 mb-2">
+<img alt="User's Zen Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfw3mcHHpHI1q0qcjXBDlxpZDHGYxT_fhGySNkJAAebPWAF9qSHd4WU4uHvaib6OTInCdt_D9bGltOM00CYNVp1__DnvHq-fuz1vnvrWm-nc6SDVaYPA5t3LrKTGCjey_PDxALQAGE5JqDVIvGI7C_RPaIKwaGxgIdFmZdCiT2IgwCxhqLG4vDOBdRCsSHh5BaJLQnBrRBk4h2WIcjy722IvD1It2UZsqNwcMRH9U4v7iTRmr-tZ0k_duej-he9fOCbCrvPxeeeRo"/>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Sanctuary</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant/70 uppercase">Stay Grounded</p>
+</div>
+<!-- Primary Navigation -->
+<div class="flex flex-col gap-2 flex-1 px-4">
+<!-- Active Tab: Daily Flow (matches Home Dashboard intent) -->
+<a class="flex items-center gap-4 py-3 text-primary dark:text-primary-fixed-dim font-bold border-l-4 border-primary pl-4 hover:bg-primary-container/10 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">spa</span>
+<span class="font-body-md group-hover:translate-x-1 duration-200">Daily Flow</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-4 py-3 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary hover:bg-primary-container/10 transition-all duration-200 group border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">self_care</span>
+<span class="font-body-md group-hover:translate-x-1 duration-200">Meditation</span>
+</a>
+<a class="flex items-center gap-4 py-3 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary hover:bg-primary-container/10 transition-all duration-200 group border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-body-md group-hover:translate-x-1 duration-200">Habits</span>
+</a>
+<a class="flex items-center gap-4 py-3 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary hover:bg-primary-container/10 transition-all duration-200 group border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-md group-hover:translate-x-1 duration-200">Reflection</span>
+</a>
+</div>
+<!-- CTA -->
+<div class="px-6 mb-8">
+<button class="w-full py-3 rounded-full bg-primary/10 border border-primary/20 text-primary font-body-md hover:bg-primary hover:text-on-primary transition-colors duration-300 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">air</span>
+                    Take a Breath
+                </button>
+</div>
+<!-- Footer Navigation -->
+<div class="flex flex-col gap-2 px-4 mt-auto">
+<a class="flex items-center gap-4 py-2 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary hover:bg-primary-container/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-md text-sm">Settings</span>
+</a>
+<a class="flex items-center gap-4 py-2 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary hover:bg-primary-container/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+<span class="font-body-md text-sm">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 relative overflow-y-auto overflow-x-hidden">
+<!-- Background Atmospheric Glows -->
+<div class="absolute top-[-10%] right-[-5%] w-[800px] h-[800px] bg-background-ambient/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen"></div>
+<div class="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[100px] pointer-events-none mix-blend-screen"></div>
+<div class="max-w-screen-xl mx-auto px-margin-desktop py-12 flex flex-col gap-12 relative z-10 min-h-full">
+<!-- Header Section -->
+<header class="flex justify-between items-end">
+<div>
+<h2 class="font-display-lg text-display-lg text-soft-white mb-2">Morning, Alex.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">The air is still. Take a moment to center yourself.</p>
+</div>
+</header>
+<!-- Central Focus: Breathing Orb Hero -->
+<section class="flex flex-col items-center justify-center py-16 relative">
+<!-- Glowing Aura Container -->
+<div class="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center">
+<!-- Pulsing ambient glow -->
+<div class="absolute inset-0 rounded-full bg-primary/30 blur-[60px] animate-aura-pulse"></div>
+<div class="absolute inset-4 rounded-full bg-secondary/20 blur-[40px] animate-breathe"></div>
+<!-- Core Orb Image -->
+<div class="relative z-10 w-full h-full rounded-full overflow-hidden shadow-[0_0_80px_rgba(178,218,255,0.2)] animate-breathe">
+<img alt="Pulsing breathing orb" class="w-full h-full object-cover mix-blend-screen opacity-90" src="https://lh3.googleusercontent.com/aida/ADBb0ughLLH1HF9mAIRjxuqQ4V6tqoESRI6Ku0zaYRtSad7x_KAonYZRUQskxUiEWOwkDv5K4l1Lut0hlAbjC_7_ET_lCIslwoQj8hDah8xcjB01S0OQAFJDCIx5xgWv25CFBBAAVk1iUuHWcy_zGH9ept1CrVWfqVRhpplLkm2i447nJGzLNuW7yeavKIm5RNDPIEAW2brBvMBlNhPWHXsu92d-gI9riZ2ua_E4M2lzdQqRRXozk6knqtRJAug"/>
+</div>
+</div>
+<div class="mt-12 text-center flex flex-col items-center gap-4">
+<p class="font-label-caps text-label-caps text-secondary tracking-widest uppercase">Tap to begin</p>
+<h3 class="font-headline-lg text-headline-lg text-soft-white font-light">Deep Resonance</h3>
+<p class="font-body-md text-on-surface-variant max-w-sm">A 5-minute guided breathwork session to synchronize your rhythm with the surrounding tranquility.</p>
+</div>
+</section>
+<!-- Bento Grid: Secondary Activities -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full mt-auto">
+<!-- Weekly Rhythm (Streak Tracker) -->
+<div class="glass-panel rounded-3xl p-8 lg:col-span-5 flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+<div class="mb-6">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<h3 class="font-title-md text-title-md text-soft-white">Weekly Rhythm</h3>
+</div>
+<p class="font-body-md text-on-surface-variant text-sm">You've found peace 4 days this week.</p>
+</div>
+<div class="flex justify-between items-end mt-4">
+<!-- Days -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-secondary/20 border border-secondary text-secondary flex items-center justify-center font-bold text-sm shadow-[0_0_15px_rgba(118,221,118,0.2)]">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">M</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-secondary/20 border border-secondary text-secondary flex items-center justify-center font-bold text-sm shadow-[0_0_15px_rgba(118,221,118,0.2)]">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">T</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full border border-surface-variant text-on-surface-variant flex items-center justify-center text-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-variant"></span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">W</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-secondary/20 border border-secondary text-secondary flex items-center justify-center font-bold text-sm shadow-[0_0_15px_rgba(118,221,118,0.2)]">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">T</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary/20 border border-primary text-primary flex items-center justify-center font-bold text-sm shadow-[0_0_15px_rgba(178,218,255,0.2)] relative">
+<span class="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full animate-pulse"></span>
+</div>
+<span class="font-label-caps text-[10px] text-primary">F</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full border border-surface-variant border-dashed text-on-surface-variant/50 flex items-center justify-center text-sm"></div>
+<span class="font-label-caps text-[10px] text-on-surface-variant/50">S</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full border border-surface-variant border-dashed text-on-surface-variant/50 flex items-center justify-center text-sm"></div>
+<span class="font-label-caps text-[10px] text-on-surface-variant/50">S</span>
+</div>
+</div>
+</div>
+<!-- Quick Relief (Carousel) -->
+<div class="glass-panel rounded-3xl p-8 lg:col-span-7 flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-title-md text-title-md text-soft-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">water_drop</span>
+                                Quick Relief
+                            </h3>
+<button class="text-primary hover:text-primary-fixed-dim text-sm font-body-md transition-colors">View All</button>
+</div>
+<!-- Horizontal Scroll Container -->
+<div class="flex gap-4 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4">
+<!-- Card 1: Box Breathing -->
+<div class="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
+<div class="absolute inset-0 bg-surface-container-high/60 z-10 transition-opacity group-hover:opacity-40"></div>
+<img alt="Box Breathing Background" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A serene, soft-focus macro shot of dark green moss and smooth river stones illuminated by gentle, diffused sunlight. The atmosphere is calm and minimalistic, embodying a dark mode aesthetic with deep shadows and soft highlights. The color palette emphasizes tranquil greens and deep teal shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGORE8YyF9Dds5XzFdr5LaO0E35yxodr8DET1SvGT72NoTTOAKan_DklkBGQSd6fWSO46AHHSPG6vEieHMByCYPqdBYy1rGESrsggPJnY7UdJnzmmwEq-1Df0fLXXK_ZrPRrSgPUDEHpSuF4l36KcW9Rfw1Autp2XgO4FHJKEUtj2RgHli1GT6EvCngEwXB2cgDQKStxoyUdXSoaFdmJCTY8bWAEpbU5I4fTpOeulLZ7qd2wZ10FAOKknGXSSUVovcA0M9Mu7ydpg"/>
+<div class="absolute inset-0 z-20 p-5 flex flex-col justify-end bg-gradient-to-t from-[#001719]/90 to-transparent">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-soft-white text-[16px]">stop</span>
+<span class="font-label-caps text-[10px] text-soft-white/80 uppercase">3 Min</span>
+</div>
+<h4 class="font-title-md text-soft-white group-hover:text-primary transition-colors">Box Breathing</h4>
+</div>
+</div>
+<!-- Card 2: Forest Walk -->
+<div class="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
+<div class="absolute inset-0 bg-surface-container-high/60 z-10 transition-opacity group-hover:opacity-40"></div>
+<img alt="Forest Walk Background" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A misty, atmospheric view deep within a dense pine forest. The scene is shot with a shallow depth of field, rendering the distant trees as soft, moody silhouettes against a muted teal sky. The overall tone is cool, tranquil, and slightly mysterious, fitting perfectly into a dark, immersive mental health sanctuary design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGeGeQtrq5fa7htwm4X0UlfkbMS6NWrOg_f3qt4TIaPz7BMTy2IVTy6jodHbraBjEkDwJ3C7irWgMyjBOJQ0xlAVOFbBmy-XFJtJhMha7z6tUWuDO-OQzNDlNvvYx089K8OjocqZmAz5MISYftMAgH7sg5Rmm4t3qbILMeuWHNV4VOIJWrmNmkxRYqQ8sGM_KZgrXYkJXjRATqPSNnNfvbtbdoAi1wqMFe3bPIX5Ct5ZnbDfqoH6GVt4X26JFdypQb3oclJutT4CY"/>
+<div class="absolute inset-0 z-20 p-5 flex flex-col justify-end bg-gradient-to-t from-[#001719]/90 to-transparent">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-soft-white text-[16px]">headphones</span>
+<span class="font-label-caps text-[10px] text-soft-white/80 uppercase">10 Min Soundscape</span>
+</div>
+<h4 class="font-title-md text-soft-white group-hover:text-primary transition-colors">Forest Walk</h4>
+</div>
+</div>
+<!-- Card 3: Body Scan -->
+<div class="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
+<div class="absolute inset-0 bg-surface-container-high/60 z-10 transition-opacity group-hover:opacity-40"></div>
+<img alt="Body Scan Background" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A minimalist composition of gentle, rolling ocean waves meeting a dark, smooth sandy beach at twilight. The lighting is extremely soft, emphasizing deep indigo and soft white seafoam. The image evokes a sense of sweeping, rhythmic calmness suited for a grounding exercise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV0PYJjFb5JQSOQOxZaoIyUgCZbkydvh7aMSd5h3CwOwKeh4w5vZ8ueYjHtUtpB0zRC4qqtYVwJ0KiLFVZzvcB9m-Zcn7DtzPSWzcQvmS-BlyOJbP178KrRnJm8BlChkztpnZlZ0LYUtO5Gviy3d3cORA7OMswx07I5X8S6MF1CJuLoxy-_jhi4vyLacLHf0i4j2kKU1-NBwILEbFgcs9ZGqZqHO0BXk0MGBwqtU-9M0Q9OxVVJC59tbEz-8cFhUw5Rq_qHOFMbqg"/>
+<div class="absolute inset-0 z-20 p-5 flex flex-col justify-end bg-gradient-to-t from-[#001719]/90 to-transparent">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-soft-white text-[16px]">accessibility_new</span>
+<span class="font-label-caps text-[10px] text-soft-white/80 uppercase">5 Min</span>
+</div>
+<h4 class="font-title-md text-soft-white group-hover:text-primary transition-colors">Body Scan</h4>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sanctuary - Reflection Chat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#004b73",
+                    "soft-white": "#F8FAFC",
+                    "inverse-primary": "#036496",
+                    "surface-tint": "#92ccff",
+                    "on-tertiary": "#3e2e00",
+                    "secondary-container": "#007920",
+                    "background-deep": "#122B61",
+                    "tertiary-fixed": "#ffdf93",
+                    "on-secondary": "#00390a",
+                    "background-ambient": "#4B6CC9",
+                    "background": "#001719",
+                    "ink-dark": "#0D2527",
+                    "surface-dim": "#001719",
+                    "surface-container-high": "#002f33",
+                    "secondary": "#76dd76",
+                    "on-tertiary-fixed-variant": "#594400",
+                    "error-container": "#93000a",
+                    "surface-container-highest": "#003b40",
+                    "surface": "#001719",
+                    "tertiary-container": "#e3b320",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed-variant": "#005313",
+                    "on-primary": "#003351",
+                    "on-surface": "#b8ebf1",
+                    "secondary-fixed": "#92fa8f",
+                    "inverse-surface": "#b8ebf1",
+                    "inverse-on-surface": "#00363b",
+                    "primary-fixed": "#cce5ff",
+                    "on-surface-variant": "#c0c7d0",
+                    "on-primary-fixed": "#001e31",
+                    "surface-container-low": "#002022",
+                    "on-primary-container": "#004e77",
+                    "on-tertiary-container": "#5c4700",
+                    "primary-fixed-dim": "#92ccff",
+                    "on-secondary-fixed": "#002204",
+                    "surface-container-lowest": "#001113",
+                    "primary": "#b2daff",
+                    "outline": "#8a919a",
+                    "secondary-fixed-dim": "#76dd76",
+                    "tertiary": "#ffcf4a",
+                    "surface-bright": "#034045",
+                    "primary-container": "#7cc0f8",
+                    "surface-container": "#002427",
+                    "tertiary-fixed-dim": "#f1c02f",
+                    "surface-variant": "#003b40",
+                    "on-background": "#b8ebf1",
+                    "on-error-container": "#ffdad6",
+                    "on-error": "#690005",
+                    "outline-variant": "#40484f",
+                    "on-secondary-container": "#9bff97",
+                    "on-tertiary-fixed": "#241a00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "base": "8px",
+                    "stack-sm": "12px",
+                    "margin-mobile": "24px",
+                    "stack-md": "24px",
+                    "stack-lg": "48px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "display-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "title-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label-caps": [
+                            "Space Mono"
+                    ],
+                    "headline-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-lg-mobile": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-lg": [
+                            "Plus Jakarta Sans"
+                    ]
+            },
+            "fontSize": {
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "title-md": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.1em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "28px",
+                            {
+                                    "lineHeight": "36px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Atmospheric UI Utilities */
+        body {
+            background-color: #001719; /* dark fallback */
+        }
+        
+        /* Custom Scrollbar for immersive feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(192, 199, 208, 0.2);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(146, 204, 255, 0.4);
+        }
+
+        /* Organic Glass Bubbles */
+        .bubble-ai {
+            border-top-left-radius: 4px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .bubble-user {
+            border-top-right-radius: 4px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Asynchronous Typing Animation */
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Soft Input Glow Focus */
+        .input-glow:focus-within {
+            box-shadow: 0 0 15px rgba(178, 218, 255, 0.15);
+            border-color: rgba(178, 218, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="text-body-md font-body-md text-on-surface overflow-hidden selection:bg-primary/30 selection:text-primary-fixed">
+<!-- Atmospheric Background Layers -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-background-deep via-surface-container-highest to-surface opacity-90"></div>
+<!-- Ethereal light orbs -->
+<div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-primary-container rounded-full mix-blend-screen filter blur-[150px] opacity-[0.15]"></div>
+<div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-secondary-container rounded-full mix-blend-screen filter blur-[200px] opacity-[0.08]"></div>
+<div class="absolute top-[40%] left-[30%] w-[30vw] h-[30vw] bg-background-ambient rounded-full mix-blend-screen filter blur-[120px] opacity-[0.1]"></div>
+</div>
+<!-- MAIN APP WRAPPER -->
+<div class="relative z-10 flex h-screen w-full">
+<!-- 1. SideNavBar (Brand Anchor JSON) -->
+<nav class="bg-surface-container-low/40 backdrop-blur-xl h-screen w-64 fixed left-0 top-0 border-r border-soft-white/10 flat no shadows flex flex-col h-full py-stack-lg gap-stack-md z-30">
+<!-- Header -->
+<div class="px-6 flex items-center gap-4">
+<img alt="User's Zen Avatar" class="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20" data-alt="A highly detailed, stylized 3D avatar portrait of a serene individual, softly illuminated by warm, ethereal lighting. The aesthetic blends atmospheric minimalism with organic textures, set against a deep teal and soft gold background. The character has a calm, meditative expression, rendered in a modern, high-fidelity digital art style typical of premium mental health applications." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-yMqY6rlcXfcXkAC5_QkEVWGOfJTPzf3lIH28v7M4ZBTkJaFG4HAVyyZWhIIqliwr9DsDuqCSIxjWpNeYy_iiV31uv1VCvnmKFNDboqKRy0JamuACuV28DGwTmjGtKw-9wHtioQdXO_d_FEUYwn0AbQK5m4I8eP3RbpE6-X_59s9AJ0OO7tUUJCqMMky7RSy1LEEhdWOjO4ZTwLSRPEqdL6RUsOhCP-PYcitwM4RJFaceBeCvPxPCiX66Ut2XemWqvSB5w7IPOU8"/>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary">Sanctuary</h1>
+<p class="font-body-md text-[14px] text-on-surface-variant/80">Stay Grounded</p>
+</div>
+</div>
+<!-- CTA -->
+<div class="px-6">
+<button class="w-full py-3 rounded-full bg-primary/10 border border-primary/20 text-primary-fixed-dim font-label-caps text-label-caps hover:bg-primary/20 hover:border-primary/40 transition-all duration-300 flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">air</span>
+                    Take a Breath
+                </button>
+</div>
+<!-- Primary Navigation Tabs -->
+<div class="flex-1 px-3 flex flex-col gap-2 mt-4">
+<!-- Inactive Tab -->
+<a class="flex items-center gap-4 py-3 rounded-xl hover:bg-primary-container/10 transition-all duration-200 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">spa</span>
+<span class="font-label-caps text-label-caps tracking-widest">Daily Flow</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex items-center gap-4 py-3 rounded-xl hover:bg-primary-container/10 transition-all duration-200 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">self_care</span>
+<span class="font-label-caps text-label-caps tracking-widest">Meditation</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex items-center gap-4 py-3 rounded-xl hover:bg-primary-container/10 transition-all duration-200 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">auto_awesome</span>
+<span class="font-label-caps text-label-caps tracking-widest">Habits</span>
+</a>
+<!-- Active Tab (Chat Interface represents Reflection) -->
+<a class="flex items-center gap-4 py-3 rounded-xl hover:bg-primary-container/10 transition-all duration-200 text-primary dark:text-primary-fixed-dim font-bold border-l-4 border-primary pl-4 translate-x-1 bg-primary/5" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-caps text-label-caps tracking-widest">Reflection</span>
+</a>
+</div>
+<!-- Footer Navigation Tabs -->
+<div class="px-3 pb-4 flex flex-col gap-2">
+<a class="flex items-center gap-4 py-3 rounded-xl hover:bg-primary-container/10 transition-all duration-200 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary group" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-label-caps text-label-caps tracking-widest">Settings</span>
+</a>
+<a class="flex items-center gap-4 py-3 rounded-xl hover:bg-primary-container/10 transition-all duration-200 text-on-surface-variant dark:text-on-surface-variant/80 pl-4 hover:text-primary group" href="#">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+<span class="font-label-caps text-label-caps tracking-widest">Support</span>
+</a>
+</div>
+</nav>
+<!-- 2. Main Content Area (Offset by SideNav) -->
+<main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar (Brand Anchor JSON - Adapted for main content header) -->
+<header class="bg-surface/40 dark:bg-surface-container/40 backdrop-blur-lg w-full top-0 sticky border-b border-soft-white/10 shadow-sm z-20 flex justify-between items-center px-margin-desktop py-4 mx-auto">
+<!-- Branding in TopNav -->
+<div class="font-display-lg text-display-lg font-bold text-primary dark:text-primary-fixed-dim tracking-tight">Sanctuary</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-title-md text-title-md text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary hover:bg-soft-white/5 transition-colors duration-300 px-4 py-2 rounded-xl" href="#">Practice</a>
+<!-- Active State in TopNav (Journal aligns closest with reflection/chat) -->
+<a class="font-title-md text-title-md text-primary dark:text-primary-fixed border-b-2 border-primary pb-1 hover:bg-soft-white/5 transition-colors duration-300 opacity-80 scale-95 transition-transform px-4 rounded-t-xl" href="#">Journal</a>
+<a class="font-title-md text-title-md text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary hover:bg-soft-white/5 transition-colors duration-300 px-4 py-2 rounded-xl" href="#">Community</a>
+<a class="font-title-md text-title-md text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary hover:bg-soft-white/5 transition-colors duration-300 px-4 py-2 rounded-xl" href="#">Resources</a>
+</nav>
+<!-- Trailing Primary Action -->
+<button class="font-title-md text-[16px] font-semibold bg-primary text-on-primary px-6 py-2.5 rounded-full hover:bg-primary-fixed hover:shadow-[0_0_15px_rgba(178,218,255,0.4)] transition-all duration-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">park</span>
+                    Ground Now
+                </button>
+</header>
+<!-- 3. Split-Pane Workspace -->
+<div class="flex-1 flex overflow-hidden w-full max-w-screen-2xl mx-auto">
+<!-- Left Pane: History Sidebar -->
+<aside class="w-80 border-r border-soft-white/10 flex flex-col bg-surface-container-lowest/30 backdrop-blur-sm z-10 relative">
+<!-- Search / Filter -->
+<div class="p-6 border-b border-soft-white/5">
+<div class="relative input-glow rounded-xl transition-all duration-300">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50">search</span>
+<input class="w-full bg-surface-container/50 border border-soft-white/10 rounded-xl py-3 pl-12 pr-4 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-0 font-body-md text-body-md backdrop-blur-md" placeholder="Search reflections..." type="text"/>
+</div>
+</div>
+<!-- History List -->
+<div class="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+<!-- Pinned/Recent Item -->
+<div class="p-4 rounded-2xl bg-surface-container/40 border border-soft-white/5 cursor-pointer hover:bg-surface-container-high/60 transition-colors group relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary/50 rounded-l-2xl"></div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-[16px] text-primary-fixed-dim">Evening Wind Down</h3>
+<span class="text-[12px] text-on-surface-variant/60 font-label-caps">2h ago</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant line-clamp-2">Exploring the feelings of overwhelm from today's meetings and finding a center.</p>
+<div class="mt-3 flex gap-2">
+<span class="px-2 py-1 rounded-full bg-secondary-container/20 text-secondary-fixed text-[11px] font-label-caps border border-secondary-container/30">Anxiety</span>
+<span class="px-2 py-1 rounded-full bg-tertiary-container/20 text-tertiary-fixed text-[11px] font-label-caps border border-tertiary-container/30">Work</span>
+</div>
+</div>
+<!-- Older Item -->
+<div class="p-4 rounded-2xl bg-transparent border border-transparent cursor-pointer hover:bg-surface-container-low/40 hover:border-soft-white/5 transition-all group">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-[16px] text-on-surface group-hover:text-primary-fixed transition-colors">Morning Intentions</h3>
+<span class="text-[12px] text-on-surface-variant/60 font-label-caps">Yesterday</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant/80 line-clamp-2">Setting a calm tone for the week. Focusing on one task at a time.</p>
+</div>
+<!-- Older Item -->
+<div class="p-4 rounded-2xl bg-transparent border border-transparent cursor-pointer hover:bg-surface-container-low/40 hover:border-soft-white/5 transition-all group">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-[16px] text-on-surface group-hover:text-primary-fixed transition-colors">Walking Meditation</h3>
+<span class="text-[12px] text-on-surface-variant/60 font-label-caps">Oct 12</span>
+</div>
+<p class="font-body-md text-[14px] text-on-surface-variant/80 line-clamp-2">Noticed the rustling of leaves. Felt surprisingly detached from the usual rush.</p>
+</div>
+</div>
+</aside>
+<!-- Right Pane: Central Chat Area -->
+<section class="flex-1 flex flex-col relative z-10 bg-surface/10 backdrop-blur-[2px]">
+<!-- Chat Header (Contextual) -->
+<div class="px-8 py-6 border-b border-soft-white/5 flex justify-between items-center bg-gradient-to-b from-surface-container-highest/20 to-transparent">
+<div>
+<h2 class="font-headline-lg text-[24px] text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">nightlight</span>
+                                Evening Wind Down
+                            </h2>
+<p class="font-body-md text-on-surface-variant/70 mt-1">Reflecting on today's emotional landscape.</p>
+</div>
+<button class="p-2 rounded-full hover:bg-soft-white/10 text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Messages Canvas -->
+<div class="flex-1 overflow-y-auto px-8 py-8 space-y-8 flex flex-col">
+<!-- AI Message -->
+<div class="flex items-start gap-4 max-w-[80%]">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 border border-primary/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[20px]" style="font-variation-settings: 'FILL' 1;">psychology_alt</span>
+</div>
+<div class="p-5 rounded-2xl bubble-ai bg-surface-container/60 backdrop-blur-md border border-soft-white/5 text-on-surface font-body-lg text-[16px] leading-relaxed relative">
+<div class="absolute -top-[1px] left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-soft-white/20 to-transparent"></div>
+<p>Welcome back to your sanctuary. I noticed you tagged your recent check-in with "Anxiety" regarding work today. It's completely okay to feel overwhelmed.</p>
+<p class="mt-3">Would you like to explore what specifically triggered that feeling, or would you prefer a brief grounding exercise to help release it?</p>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex items-start gap-4 max-w-[80%] self-end flex-row-reverse">
+<img alt="User's Avatar" class="w-10 h-10 rounded-full object-cover ring-1 ring-primary/30 flex-shrink-0" data-alt="A highly detailed, stylized 3D avatar portrait of a serene individual, softly illuminated by warm, ethereal lighting. The aesthetic blends atmospheric minimalism with organic textures, set against a deep teal and soft gold background. The character has a calm, meditative expression, rendered in a modern, high-fidelity digital art style typical of premium mental health applications." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYA0LbBDHubrY0lwkvfEM8KrXmlXl6CDpe-I4lUl8Hm5u4mF7IZmnrRCrrVY0PZzswWU2V9w5dVAMdxOlAWfNgKcSKVWRkJUF1M6qcQLH3lw2DzHsEqU_QLgGamBLC5t-VyR31MJwY_9mifLhY61L-_2F_5-uzND5Z-YcIUOM4xSvmbOy3kHv7HYBuVOQs2V53jEY8yt-9mZzGiZMWjnYHX_PULrSyyXid2vPDd--HUGV_0FAj6aO5rkWPfRAsn3IQytEdfM7kERc"/>
+<div class="p-5 rounded-2xl bubble-user bg-primary/10 backdrop-blur-md border border-primary/20 text-on-surface font-body-lg text-[16px] leading-relaxed shadow-[0_0_15px_rgba(178,218,255,0.05)] relative">
+<div class="absolute -top-[1px] left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+<p>I think the back-to-back meetings without breaks just built up. I didn't have time to process anything before moving to the next topic.</p>
+</div>
+</div>
+<!-- AI Message -->
+<div class="flex items-start gap-4 max-w-[80%]">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 border border-primary/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[20px]" style="font-variation-settings: 'FILL' 1;">psychology_alt</span>
+</div>
+<div class="p-5 rounded-2xl bubble-ai bg-surface-container/60 backdrop-blur-md border border-soft-white/5 text-on-surface font-body-lg text-[16px] leading-relaxed relative">
+<div class="absolute -top-[1px] left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-soft-white/20 to-transparent"></div>
+<p>That makes perfect sense. Constant context-switching demands a lot of cognitive energy. It's like holding your breath for hours.</p>
+<div class="mt-4 p-4 rounded-xl bg-surface-container-highest/50 border border-soft-white/5 flex gap-4 items-center">
+<div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-secondary-fixed">self_improvement</span>
+</div>
+<div>
+<h4 class="font-title-md text-[15px] text-on-surface">The 2-Minute Transition</h4>
+<p class="font-body-md text-[13px] text-on-surface-variant mt-1">A micro-practice to reset between tasks.</p>
+</div>
+<button class="ml-auto px-4 py-2 rounded-full border border-secondary-fixed/50 text-secondary-fixed font-label-caps text-[11px] hover:bg-secondary-fixed/10 transition-colors">Start</button>
+</div>
+<p class="mt-4">How does your body feel right now holding onto that tension? Are you noticing it in your shoulders or chest?</p>
+</div>
+</div>
+<!-- Asynchronous Typing Indicator -->
+<div class="flex items-start gap-4 max-w-[80%]">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 border border-primary/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary-fixed-dim text-[20px]" style="font-variation-settings: 'FILL' 1;">psychology_alt</span>
+</div>
+<div class="py-4 px-5 rounded-2xl bubble-ai bg-surface-container/40 backdrop-blur-md border border-soft-white/5 flex items-center gap-1.5 h-[52px]">
+<div class="w-2 h-2 rounded-full bg-primary/60 typing-dot"></div>
+<div class="w-2 h-2 rounded-full bg-primary/60 typing-dot"></div>
+<div class="w-2 h-2 rounded-full bg-primary/60 typing-dot"></div>
+</div>
+</div>
+<!-- Invisible anchor for scrolling -->
+<div class="h-4"></div>
+</div>
+<!-- Input Area (Minimalist & Clean) -->
+<div class="p-6 bg-gradient-to-t from-surface-container-highest to-transparent">
+<div class="max-w-4xl mx-auto relative group">
+<!-- Organic glow backdrop for input -->
+<div class="absolute inset-0 bg-primary/5 rounded-3xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500"></div>
+<div class="relative bg-surface-container-low/80 backdrop-blur-xl border border-soft-white/10 rounded-3xl flex items-end input-glow transition-all duration-300">
+<button class="p-4 text-on-surface-variant hover:text-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined text-[24px]">add_circle</span>
+</button>
+<textarea class="w-full bg-transparent border-none py-4 px-2 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-0 resize-none font-body-lg text-[16px] max-h-[150px] overflow-y-auto" placeholder="Share your thoughts..." rows="1" style="min-height: 56px;"></textarea>
+<button class="p-4 text-primary-fixed hover:text-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<div class="mt-2 text-center">
+<span class="text-[11px] font-label-caps text-on-surface-variant/40 tracking-widest">Sanctuary AI is here to listen, not diagnose.</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>
