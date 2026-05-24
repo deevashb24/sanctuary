@@ -8,7 +8,7 @@ import { TopNavBar } from "@/components/layout/TopNavBar";
 export default function LandingPage() {
 
   return (
-    <div className="bg-background text-on-background font-body-md antialiased overflow-x-hidden min-h-screen">
+    <div className="bg-background text-ink-stone font-body-md antialiased overflow-x-hidden min-h-screen">
       <TopNavBar />
 
       <main>

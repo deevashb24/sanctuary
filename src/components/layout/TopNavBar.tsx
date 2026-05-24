@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { Shield } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 export function TopNavBar() {
@@ -17,17 +18,18 @@ export function TopNavBar() {
     <header
       className={`full-width top-0 z-50 sticky transition-all duration-300 ${
         scrolled
-          ? "shadow-sm bg-surface-container-lowest/90 backdrop-blur-md"
+          ? "border-b border-outline-variant bg-surface-container-lowest/90 backdrop-blur-md"
           : "bg-background"
       }`}
     >
       <div className="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base max-w-container-max mx-auto w-full">
         <div className="flex items-center gap-2">
-          <div
-            aria-label="Sanctuary minimalist orb logo"
-            className="w-8 h-8 rounded-full bg-gradient-to-br from-sage-light to-amber-soft opacity-80"
-          ></div>
-          <span className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold text-sage-deep tracking-tight">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-sage-light to-amber-soft p-[1px]">
+            <div className="h-full w-full rounded-[7px] bg-surface-container-lowest flex items-center justify-center">
+              <Shield className="h-4 w-4 text-sage-deep" />
+            </div>
+          </div>
+          <span className="font-headline-lg-mobile md:font-headline-lg text-lg font-semibold text-sage-deep tracking-tight">
             Sanctuary
           </span>
         </div>
