@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { Spinner } from '@/components/ui/Spinner'
-import { ArrowRight, Activity, Moon, Sun, CloudRain, CloudLightning, Wind } from 'lucide-react'
+import { ArrowRight, Activity, Moon, Sun, CloudRain, CloudLightning, Wind, ChevronLeft } from 'lucide-react'
 
 type Emotion = {
   id: string
@@ -50,7 +50,7 @@ export default function OnboardPage() {
       
       if (dbError) throw dbError
       
-      router.push('/chat')
+      router.push('/dashboard')
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save emotion log.")
       setLoading(false)
@@ -59,6 +59,14 @@ export default function OnboardPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-ink-stone relative overflow-hidden">
+      
+      {/* Back button */}
+      <div className="absolute top-6 left-6 z-20">
+        <Button variant="ghost" size="sm" onClick={() => router.push('/dashboard')} className="text-on-surface-variant hover:text-ink-stone gap-1">
+          <ChevronLeft className="h-4 w-4" />
+          Back
+        </Button>
+      </div>
       {/* Dynamic Background based on selection */}
       <AnimatePresence>
         {selectedEmotion && (

@@ -40,7 +40,7 @@ export default function LoginPage() {
         if (signUpError) throw signUpError
         // If email confirmation is required, this will not log them in automatically
         // For this scaffold, we assume auto-login if confirm is disabled
-        router.push('/onboard')
+        router.push('/dashboard')
         router.refresh()
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -48,7 +48,7 @@ export default function LoginPage() {
           password,
         })
         if (signInError) throw signInError
-        router.push('/onboard')
+        router.push('/dashboard')
         router.refresh()
       }
     } catch (err) {
