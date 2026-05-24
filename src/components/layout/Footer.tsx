@@ -14,22 +14,22 @@ export function Footer() {
           </p>
         </div>
         <div className="col-span-1 md:col-span-2 flex flex-wrap gap-4 md:justify-end">
-          <Link href="#" className="font-label-sm text-label-sm text-surface-variant opacity-80 hover:text-amber-soft hover:opacity-100 transition-all">
+          <Link href="#" className="font-label-sm text-label-sm text-white font-medium hover:text-white/80 transition-all">
             About Us
           </Link>
-          <Link href="#" className="font-label-sm text-label-sm text-surface-variant opacity-80 hover:text-amber-soft hover:opacity-100 transition-all">
+          <Link href="#" className="font-label-sm text-label-sm text-white font-medium hover:text-white/80 transition-all">
             Careers
           </Link>
-          <Link href="/legal/privacy" className="font-label-sm text-label-sm text-surface-variant opacity-80 hover:text-amber-soft hover:opacity-100 transition-all">
+          <Link href="/legal/privacy" className="font-label-sm text-label-sm text-white font-medium hover:text-white/80 transition-all">
             Privacy Policy
           </Link>
-          <Link href="/legal/terms" className="font-label-sm text-label-sm text-surface-variant opacity-80 hover:text-amber-soft hover:opacity-100 transition-all">
+          <Link href="/legal/terms" className="font-label-sm text-label-sm text-white font-medium hover:text-white/80 transition-all">
             Terms of Service
           </Link>
-          <Link href="#" className="font-label-sm text-label-sm text-surface-variant opacity-80 hover:text-amber-soft hover:opacity-100 transition-all">
+          <Link href="#" className="font-label-sm text-label-sm text-white font-medium hover:text-white/80 transition-all">
             Help Center
           </Link>
-          <Link href="#" className="font-label-sm text-label-sm text-surface-variant opacity-80 hover:text-amber-soft hover:opacity-100 transition-all">
+          <Link href="#" className="font-label-sm text-label-sm text-white font-medium hover:text-white/80 transition-all">
             Safety Resources
           </Link>
         </div>

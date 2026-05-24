@@ -4,9 +4,14 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/client'
+import { Mic } from 'lucide-react'
 
 export default function DashboardPage() {
   const [userName, setUserName] = useState<string>('Alex')
+  const [isListening, setIsListening] = useState(false)
+  const [voiceTranscript, setVoiceTranscript] = useState('')
+  const [showVoiceToast, setShowVoiceToast] = useState(false)
+  
   const router = useRouter()
   const supabase = createClient()
 
@@ -19,6 +24,47 @@ export default function DashboardPage() {
     }
     loadUser()
   }, [])
+
+  const startListening = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert("Your browser doesn't support voice recognition.")
+      return
+    }
+
+    const recognition = new SpeechRecognition()
+    recognition.continuous = false
+    recognition.interimResults = false
+    recognition.lang = 'en-US'
+
+    recognition.onstart = () => {
+      setIsListening(true)
+      setShowVoiceToast(true)
+      setVoiceTranscript('')
+    }
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript
+      setVoiceTranscript(transcript)
+      // Once we have a result, route to Chat and automatically submit it
+      setTimeout(() => {
+        router.push(`/chat?initialMessage=${encodeURIComponent(transcript)}`)
+      }, 1000)
+    }
+
+    recognition.onerror = (event: any) => {
+      console.error('Speech recognition error', event.error)
+      setIsListening(false)
+      setShowVoiceToast(false)
+    }
+
+    recognition.onend = () => {
+      setIsListening(false)
+      setTimeout(() => setShowVoiceToast(false), 2000)
+    }
+
+    recognition.start()
+  }
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -74,7 +120,7 @@ export default function DashboardPage() {
           
           {/* Footer Navigation */}
           <div className="flex flex-col gap-2 px-4 mt-auto">
-            <button className="flex items-center gap-4 py-2 text-on-surface-variant pl-4 hover:text-primary hover:bg-primary-container/10 transition-all duration-200">
+            <button onClick={() => router.push('/settings')} className="flex items-center gap-4 py-2 text-on-surface-variant pl-4 hover:text-primary hover:bg-primary-container/10 transition-all duration-200">
               <span className="material-symbols-outlined text-[20px]">settings</span>
               <span className="font-body-md text-sm">Settings</span>
             </button>
@@ -102,14 +148,28 @@ export default function DashboardPage() {
             
             {/* Central Focus: Breathing Orb Hero */}
             <section className="flex flex-col items-center justify-center py-8 md:py-16 relative">
+              
+              {/* Voice Toast Notification */}
+              {showVoiceToast && (
+                <div className="absolute top-0 z-50 bg-surface-container-highest/90 backdrop-blur-md border border-primary/30 px-6 py-3 rounded-full flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
+                  <Mic className="h-4 w-4 text-primary animate-pulse" />
+                  <span className="font-body-md text-sm text-soft-white">
+                    {voiceTranscript ? `"${voiceTranscript}"` : "Try saying hello..."}
+                  </span>
+                </div>
+              )}
+
               {/* Glowing Aura Container */}
-              <div className="relative w-64 h-64 md:w-96 md:h-96 flex items-center justify-center">
+              <div 
+                onClick={startListening}
+                className="relative w-64 h-64 md:w-96 md:h-96 flex items-center justify-center cursor-pointer group"
+              >
                 {/* Pulsing ambient glow */}
-                <div className="absolute inset-0 rounded-full bg-primary/30 blur-[60px] animate-aura-pulse"></div>
+                <div className={`absolute inset-0 rounded-full bg-primary/30 blur-[60px] ${isListening ? 'animate-ping duration-1000' : 'animate-aura-pulse'}`}></div>
                 <div className="absolute inset-4 rounded-full bg-secondary/20 blur-[40px] animate-breathe"></div>
                 {/* Core Orb Image */}
-                <div className="relative z-10 w-full h-full rounded-full overflow-hidden shadow-[0_0_80px_rgba(178,218,255,0.2)] animate-breathe">
-                  <img alt="Pulsing breathing orb" className="w-full h-full object-cover mix-blend-screen opacity-90" src="https://lh3.googleusercontent.com/aida/ADBb0ughLLH1HF9mAIRjxuqQ4V6tqoESRI6Ku0zaYRtSad7x_KAonYZRUQskxUiEWOwkDv5K4l1Lut0hlAbjC_7_ET_lCIslwoQj8hDah8xcjB01S0OQAFJDCIx5xgWv25CFBBAAVk1iUuHWcy_zGH9ept1CrVWfqVRhpplLkm2i447nJGzLNuW7yeavKIm5RNDPIEAW2brBvMBlNhPWHXsu92d-gI9riZ2ua_E4M2lzdQqRRXozk6knqtRJAug" />
+                <div className={`relative z-10 w-full h-full rounded-full overflow-hidden shadow-[0_0_80px_rgba(178,218,255,0.2)] ${isListening ? 'scale-105' : 'animate-breathe'} transition-transform duration-500`}>
+                  <img alt="Pulsing breathing orb" className="w-full h-full object-cover mix-blend-screen opacity-90 group-hover:scale-110 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida/ADBb0ughLLH1HF9mAIRjxuqQ4V6tqoESRI6Ku0zaYRtSad7x_KAonYZRUQskxUiEWOwkDv5K4l1Lut0hlAbjC_7_ET_lCIslwoQj8hDah8xcjB01S0OQAFJDCIx5xgWv25CFBBAAVk1iUuHWcy_zGH9ept1CrVWfqVRhpplLkm2i447nJGzLNuW7yeavKIm5RNDPIEAW2brBvMBlNhPWHXsu92d-gI9riZ2ua_E4M2lzdQqRRXozk6knqtRJAug" />
                 </div>
               </div>
               
@@ -190,7 +250,7 @@ export default function DashboardPage() {
                 {/* Horizontal Scroll Container */}
                 <div className="flex gap-4 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 -mx-4 px-4">
                   {/* Card 1: Box Breathing */}
-                  <div onClick={() => router.push('/chat')} className="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
+                  <div onClick={() => router.push('/chat?initialMessage=Please%20guide%20me%20through%20a%203-minute%20Box%20Breathing%20exercise.')} className="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
                     <div className="absolute inset-0 bg-surface-container-high/60 z-10 transition-opacity group-hover:opacity-40"></div>
                     <img alt="Box Breathing Background" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGORE8YyF9Dds5XzFdr5LaO0E35yxodr8DET1SvGT72NoTTOAKan_DklkBGQSd6fWSO46AHHSPG6vEieHMByCYPqdBYy1rGESrsggPJnY7UdJnzmmwEq-1Df0fLXXK_ZrPRrSgPUDEHpSuF4l36KcW9Rfw1Autp2XgO4FHJKEUtj2RgHli1GT6EvCngEwXB2cgDQKStxoyUdXSoaFdmJCTY8bWAEpbU5I4fTpOeulLZ7qd2wZ10FAOKknGXSSUVovcA0M9Mu7ydpg" />
                     <div className="absolute inset-0 z-20 p-5 flex flex-col justify-end bg-gradient-to-t from-[#001719]/90 to-transparent">
@@ -203,7 +263,7 @@ export default function DashboardPage() {
                   </div>
                   
                   {/* Card 2: Forest Walk */}
-                  <div onClick={() => router.push('/chat')} className="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
+                  <div onClick={() => router.push('/chat?initialMessage=Please%20guide%20me%20through%20a%2010-minute%20Forest%20Walk%20visualization.')} className="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
                     <div className="absolute inset-0 bg-surface-container-high/60 z-10 transition-opacity group-hover:opacity-40"></div>
                     <img alt="Forest Walk Background" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGeGeQtrq5fa7htwm4X0UlfkbMS6NWrOg_f3qt4TIaPz7BMTy2IVTy6jodHbraBjEkDwJ3C7irWgMyjBOJQ0xlAVOFbBmy-XFJtJhMha7z6tUWuDO-OQzNDlNvvYx089K8OjocqZmAz5MISYftMAgH7sg5Rmm4t3qbILMeuWHNV4VOIJWrmNmkxRYqQ8sGM_KZgrXYkJXjRATqPSNnNfvbtbdoAi1wqMFe3bPIX5Ct5ZnbDfqoH6GVt4X26JFdypQb3oclJutT4CY" />
                     <div className="absolute inset-0 z-20 p-5 flex flex-col justify-end bg-gradient-to-t from-[#001719]/90 to-transparent">
@@ -216,7 +276,7 @@ export default function DashboardPage() {
                   </div>
                   
                   {/* Card 3: Body Scan */}
-                  <div onClick={() => router.push('/chat')} className="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
+                  <div onClick={() => router.push('/chat?initialMessage=Please%20guide%20me%20through%20a%205-minute%20Body%20Scan.')} className="min-w-[240px] h-48 rounded-2xl relative overflow-hidden group snap-start cursor-pointer border border-soft-white/5">
                     <div className="absolute inset-0 bg-surface-container-high/60 z-10 transition-opacity group-hover:opacity-40"></div>
                     <img alt="Body Scan Background" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV0PYJjFb5JQSOQOxZaoIyUgCZbkydvh7aMSd5h3CwOwKeh4w5vZ8ueYjHtUtpB0zRC4qqtYVwJ0KiLFVZzvcB9m-Zcn7DtzPSWzcQvmS-BlyOJbP178KrRnJm8BlChkztpnZlZ0LYUtO5Gviy3d3cORA7OMswx07I5X8S6MF1CJuLoxy-_jhi4vyLacLHf0i4j2kKU1-NBwILEbFgcs9ZGqZqHO0BXk0MGBwqtU-9M0Q9OxVVJC59tbEz-8cFhUw5Rq_qHOFMbqg" />
                     <div className="absolute inset-0 z-20 p-5 flex flex-col justify-end bg-gradient-to-t from-[#001719]/90 to-transparent">

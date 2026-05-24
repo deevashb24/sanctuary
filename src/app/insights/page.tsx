@@ -68,9 +68,9 @@ export default function InsightsPage() {
         <div className="flex items-center justify-between">
           <div>
             <Button asChild variant="ghost" size="sm" className="mb-4 text-on-surface-variant hover:text-ink-stone -ml-3">
-              <Link href="/chat">
+              <Link href="/dashboard">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Chat
+                Back to Dashboard
               </Link>
             </Button>
             <h1 className="text-3xl font-headline-xl tracking-tight text-sage-deep">Your Insights</h1>

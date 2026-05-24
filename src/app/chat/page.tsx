@@ -3,10 +3,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { createClient } from '@/utils/supabase/client'
-import { Send, AlertTriangle, Shield, User, Bot, Loader2, LogOut } from 'lucide-react'
+import { Send, AlertTriangle, Shield, User, Bot, Loader2, LogOut, ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 type Message = {
   id: string
@@ -26,6 +26,9 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const supabase = createClient()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const initialMessageParam = searchParams.get('initialMessage')
+  const initialMessageProcessed = useRef(false)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -99,6 +102,18 @@ export default function ChatPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    // If an initial message was passed (e.g. from voice or quick exercises), submit it automatically
+    if (initialMessageParam && sessionId && !initialMessageProcessed.current) {
+      initialMessageProcessed.current = true
+      setInput(initialMessageParam)
+      // Small timeout to allow input state to register before submitting
+      setTimeout(() => {
+        handleSendMessage(new Event('submit') as any, initialMessageParam)
+      }, 100)
+    }
+  }, [initialMessageParam, sessionId])
+
   const handleSignOut = async () => {
     await supabase.auth.signOut()
     router.push('/login')
@@ -109,12 +124,15 @@ export default function ChatPage() {
     return CRISIS_KEYWORDS.some(keyword => lower.includes(keyword))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent, overrideInput?: string) => {
     e.preventDefault()
-    if (!input.trim() || !sessionId || isLoading) return
+    
+    const messageToSend = overrideInput || input
 
-    const userText = input.trim()
-    setInput('')
+    if (!messageToSend.trim() || !sessionId || isLoading) return
+
+    const userText = messageToSend.trim()
+    if (!overrideInput) setInput('')
     
     // Add user message to UI
     const newUserMsg: Message = { id: Date.now().toString(), role: 'user', content: userText }
@@ -197,13 +215,18 @@ export default function ChatPage() {
     <div className="flex flex-col h-screen bg-background text-ink-stone font-body-md">
       {/* Header */}
       <header className="h-16 flex items-center justify-between px-6 border-b border-outline-variant bg-surface-container-lowest/90 backdrop-blur-md sticky top-0 z-10">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-sage-light to-amber-soft p-[1px]">
-            <div className="h-full w-full rounded-[7px] bg-surface-container-lowest flex items-center justify-center">
-              <Shield className="h-4 w-4 text-sage-deep" />
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" onClick={() => router.push('/dashboard')} aria-label="Back to dashboard" className="h-9 w-9 text-on-surface-variant hover:text-ink-stone -ml-2">
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-sage-light to-amber-soft p-[1px]">
+              <div className="h-full w-full rounded-[7px] bg-surface-container-lowest flex items-center justify-center">
+                <Shield className="h-4 w-4 text-sage-deep" />
+              </div>
             </div>
+            <span className="font-headline-lg-mobile text-lg font-semibold tracking-tight text-sage-deep hidden sm:inline-block">Sanctuary</span>
           </div>
-          <span className="font-headline-lg-mobile text-lg font-semibold tracking-tight text-sage-deep">Sanctuary</span>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => router.push('/insights')} aria-label="View Insights">
@@ -270,7 +293,7 @@ export default function ChatPage() {
 
       {/* Input Area */}
       <footer className="p-4 bg-background/80 backdrop-blur-md border-t border-outline-variant">
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto relative flex items-center">
+        <form onSubmit={handleSendMessage} className="max-w-3xl mx-auto relative flex items-center">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
