@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { createClient } from '@/utils/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Shield, Mail, Lock, User, ArrowRight, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -10,15 +10,38 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Spinner } from '@/components/ui/Spinner'
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-6 h-6 rounded-full border-2 border-sage-deep border-t-transparent animate-spin" />
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
+  )
+}
+
+function LoginContent() {
   const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  
+
   const supabase = createClient()
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Surface errors from the OAuth callback (e.g. user denied, config issue)
+  useEffect(() => {
+    const cbError = searchParams.get('error')
+    if (cbError === 'auth_callback_failed') {
+      setTimeout(() => {
+        setError('Google sign-in failed. Check your Supabase Google provider settings and redirect URL configuration.')
+      }, 0)
+    }
+  }, [searchParams])
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -59,12 +82,20 @@ export default function LoginPage() {
   }
 
   const handleGoogleSignIn = async () => {
+    setError(null)
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
-        }
+          // Must point to the callback route — this exchanges the OAuth
+          // code for a session cookie. Sending directly to /dashboard
+          // skips the code exchange and leaves the user unauthenticated.
+          redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
+        },
       })
       if (error) throw error
     } catch (err) {

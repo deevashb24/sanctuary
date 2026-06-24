@@ -2,20 +2,27 @@ import type { NextConfig } from "next";
 
 const cspHeader = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.tailwindcss.com;
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.tailwindcss.com https://accounts.google.com blob:;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com;
   font-src 'self' https://fonts.gstatic.com;
-  img-src 'self' data: https:;
-  connect-src 'self' https://*.supabase.co;
+  img-src 'self' data: https: blob:;
+  worker-src blob: 'self';
+  connect-src 'self' https://*.supabase.co https://accounts.google.com https://oauth2.googleapis.com https://openidconnect.googleapis.com https://www.googleapis.com blob:;
+  frame-src https://accounts.google.com;
   frame-ancestors 'none';
 `;
 
 const nextConfig: NextConfig = {
+  transpilePackages: ['@react-three/fiber', '@react-three/drei', '@react-three/postprocessing', 'three'],
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cryptologos.cc',
       },
     ],
   },

@@ -6,7 +6,7 @@ import { createClient } from '@/utils/supabase/client'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Spinner } from '@/components/ui/Spinner'
-import { ArrowLeft, Activity, Calendar, Moon, Sun, CloudRain, CloudLightning, Wind } from 'lucide-react'
+import { ArrowLeft, Activity, Calendar, Moon, Sun, CloudRain, CloudLightning, Wind, LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 
 type MoodLog = {
@@ -16,7 +16,7 @@ type MoodLog = {
   created_at: string
 }
 
-const emotionMap: Record<string, { label: string, color: string, bg: string, icon: React.ElementType }> = {
+const emotionMap: Record<string, { label: string, color: string, bg: string, icon: LucideIcon }> = {
   calm: { label: 'Calm', color: 'text-sage-deep', bg: 'bg-sage-light/30', icon: Moon },
   happy: { label: 'Happy', color: 'text-tertiary-container', bg: 'bg-amber-soft/30', icon: Sun },
   sad: { label: 'Sad', color: 'text-secondary', bg: 'bg-secondary-fixed-dim/30', icon: CloudRain },
@@ -36,7 +36,7 @@ export default function InsightsPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('mood_logs')
         .select('*')
         .eq('user_id', user.id)

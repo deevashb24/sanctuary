@@ -134,7 +134,7 @@ export default function LandingPage() {
                 Check-in
               </h3>
               <p className="font-body-md text-body-md text-on-surface-variant mb-6">
-                Pause and identify how you're feeling using our intuitive,
+                Pause and identify how you&apos;re feeling using our intuitive,
                 color-mapped mood wheel.
               </p>
               <div className="aspect-square bg-cream-bg rounded-2xl flex items-center justify-center p-4 border border-outline-variant/20">
@@ -165,10 +165,10 @@ export default function LandingPage() {
               </p>
               <div className="aspect-square bg-cream-bg rounded-2xl p-4 border border-outline-variant/20 flex flex-col gap-3 justify-end">
                 <div className="bg-surface-container-lowest p-3 rounded-2xl rounded-bl-sm self-start text-sm shadow-sm border border-outline-variant/10 max-w-[80%]">
-                  I'm feeling overwhelmed today.
+                  I&apos;m feeling overwhelmed today.
                 </div>
                 <div className="bg-sage-light/20 p-3 rounded-2xl rounded-br-sm self-end text-sm text-sage-deep border border-sage-light/30 max-w-[80%]">
-                  I hear you. Let's take a slow breath together. What feels
+                  I hear you. Let&apos;s take a slow breath together. What feels
                   heaviest right now?
                 </div>
               </div>

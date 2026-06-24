@@ -204,7 +204,7 @@ export default function PrivacyPolicyPage() {
               </h2>
               <p className="mb-6 line-height-[1.8] text-ink-stone">
                 Consent is central to our data philosophy. We operate on an
-                "opt-in" rather than "opt-out" basis for any data sharing beyond
+                &quot;opt-in&quot; rather than &quot;opt-out&quot; basis for any data sharing beyond
                 core functionality.
               </p>
               <p className="mb-6 line-height-[1.8] text-ink-stone">

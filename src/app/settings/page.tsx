@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+
 import Link from 'next/link'
-import { ChevronLeft, User, Bell, Shield, Moon } from 'lucide-react'
+import { ChevronLeft, User, Moon } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { createClient } from '@/utils/supabase/client'
 import { Input } from '@/components/ui/Input'
@@ -12,7 +12,7 @@ export default function SettingsPage() {
   const [userName, setUserName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [loading, setLoading] = useState(true)
-  const router = useRouter()
+
   const supabase = createClient()
 
   useEffect(() => {
@@ -25,6 +25,7 @@ export default function SettingsPage() {
       setLoading(false)
     }
     loadUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

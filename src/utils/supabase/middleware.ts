@@ -28,24 +28,31 @@ export async function updateSession(request: NextRequest) {
   )
 
   // This will refresh the session if expired - vital for SSR.
-  const { data: { user } } = await supabase.auth.getUser()
+  await supabase.auth.getUser()
 
   const pathname = request.nextUrl.pathname
 
-  const protectedRoutes = ['/chat', '/onboard', '/insights', '/dashboard']
-  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
-
-  if (!user && isProtectedRoute) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
+  // Let the OAuth callback route run freely — it needs to exchange the code
+  // for a session before any session cookie exists.
+  if (pathname.startsWith('/auth/callback')) {
+    return supabaseResponse
   }
 
-  if (user && pathname === '/login') {
-    const url = request.nextUrl.clone()
-    url.pathname = '/onboard'
-    return NextResponse.redirect(url)
-  }
+  // ── AUTH BYPASS (dev only) ──────────────────────────────────────────────
+  // Remove these comments to re-enable auth guards.
+  // const protectedRoutes = ['/chat', '/onboard', '/insights', '/dashboard']
+  // const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
+  // if (!user && isProtectedRoute) {
+  //   const url = request.nextUrl.clone()
+  //   url.pathname = '/login'
+  //   return NextResponse.redirect(url)
+  // }
+  // if (user && pathname === '/login') {
+  //   const url = request.nextUrl.clone()
+  //   url.pathname = '/dashboard'
+  //   return NextResponse.redirect(url)
+  // }
+  // ────────────────────────────────────────────────────────────────────────
 
   return supabaseResponse
 }

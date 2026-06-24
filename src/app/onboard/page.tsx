@@ -6,13 +6,13 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { Spinner } from '@/components/ui/Spinner'
-import { ArrowRight, Activity, Moon, Sun, CloudRain, CloudLightning, Wind, ChevronLeft } from 'lucide-react'
+import { ArrowRight, Activity, Moon, Sun, CloudRain, CloudLightning, Wind, ChevronLeft, LucideIcon } from 'lucide-react'
 
 type Emotion = {
   id: string
   label: string
   color: string
-  icon: React.ElementType
+  icon: LucideIcon
 }
 
 const emotions: Emotion[] = [

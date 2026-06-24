@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { createClient } from '@/utils/supabase/client'
 import { Send, AlertTriangle, Shield, User, Bot, Loader2, LogOut, ChevronLeft } from 'lucide-react'
@@ -18,6 +18,18 @@ type Message = {
 const CRISIS_KEYWORDS = ['suicide', 'kill myself', 'self harm', 'end it all', 'die']
 
 export default function ChatPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="w-6 h-6 rounded-full border-2 border-sage-deep border-t-transparent animate-spin" />
+      </div>
+    }>
+      <ChatContent />
+    </Suspense>
+  )
+}
+
+function ChatContent() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -109,9 +121,11 @@ export default function ChatPage() {
       setInput(initialMessageParam)
       // Small timeout to allow input state to register before submitting
       setTimeout(() => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         handleSendMessage(new Event('submit') as any, initialMessageParam)
       }, 100)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialMessageParam, sessionId])
 
   const handleSignOut = async () => {
@@ -124,7 +138,7 @@ export default function ChatPage() {
     return CRISIS_KEYWORDS.some(keyword => lower.includes(keyword))
   }
 
-  const handleSendMessage = async (e: React.FormEvent, overrideInput?: string) => {
+  async function handleSendMessage(e: React.FormEvent, overrideInput?: string) {
     e.preventDefault()
     
     const messageToSend = overrideInput || input

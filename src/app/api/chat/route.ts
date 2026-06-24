@@ -53,44 +53,26 @@ export async function POST(req: Request) {
       }
     )
 
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    // ── AUTH BYPASS (dev only) ─────────────────────────────────────────────
+    // Uncomment the block below to re-enable auth + rate limiting.
+    // const { data: { user } } = await supabase.auth.getUser()
+    // if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    // const now = Date.now();
+    // const rateLimitData = rateLimitMap.get(user.id) ?? { count: 0, lastReset: now };
+    // if (now - rateLimitData.lastReset > RATE_LIMIT_WINDOW) { rateLimitData.count = 1; rateLimitData.lastReset = now; }
+    // else { rateLimitData.count++; }
+    // rateLimitMap.set(user.id, rateLimitData);
+    // if (rateLimitData.count > MAX_REQUESTS) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
+    const devUserId = 'dev-bypass-user'
+    // ──────────────────────────────────────────────────────────────────────
 
-    // Rate Limiting Check
-    const now = Date.now();
-    const rateLimitData = rateLimitMap.get(user.id) ?? { count: 0, lastReset: now };
-
-    if (now - rateLimitData.lastReset > RATE_LIMIT_WINDOW) {
-      rateLimitData.count = 1;
-      rateLimitData.lastReset = now;
-    } else {
-      rateLimitData.count++;
-    }
-
-    rateLimitMap.set(user.id, rateLimitData);
-
-    if (rateLimitData.count > MAX_REQUESTS) {
-      return NextResponse.json({ error: 'Too many requests. Please try again in a few seconds.' }, { status: 429 })
-    }
-
-    // Retrieve previous messages for this session to provide context
-    const { data: previousMessages } = await supabase
-      .from('chat_messages')
-      .select('role, content')
-      .eq('session_id', sessionId)
-      .order('created_at', { ascending: true })
-      .limit(20) // Keep context window manageable
-
-    let contents: Array<{ role: string; parts: { text: string }[] }> = []
-    
-    if (previousMessages) {
-      contents = previousMessages.filter(m => m.role === 'user' || m.role === 'assistant').map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user', // Gemini uses 'model', not 'assistant'
-        parts: [{ text: m.content }]
-      }))
-    }
+    // ── DB BYPASS (dev only) ───────────────────────────────────────────────
+    // Skipping chat_messages history — no Supabase DB needed in dev.
+    // Uncomment below to restore persistent context:
+    // const { data: previousMessages } = await supabase.from('chat_messages')...
+    void devUserId; void sessionId; // suppress unused-var warnings
+    const contents: Array<{ role: string; parts: { text: string }[] }> = []
+    // ──────────────────────────────────────────────────────────────────────
     
     // Add the current message
     contents.push({
