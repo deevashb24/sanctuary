@@ -53,28 +53,51 @@ export async function POST(req: Request) {
       }
     )
 
-    // ── AUTH BYPASS (dev only) ─────────────────────────────────────────────
-    // Uncomment the block below to re-enable auth + rate limiting.
-    // const { data: { user } } = await supabase.auth.getUser()
-    // if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    // const now = Date.now();
-    // const rateLimitData = rateLimitMap.get(user.id) ?? { count: 0, lastReset: now };
-    // if (now - rateLimitData.lastReset > RATE_LIMIT_WINDOW) { rateLimitData.count = 1; rateLimitData.lastReset = now; }
-    // else { rateLimitData.count++; }
-    // rateLimitMap.set(user.id, rateLimitData);
-    // if (rateLimitData.count > MAX_REQUESTS) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
-    const devUserId = 'dev-bypass-user'
-    // ──────────────────────────────────────────────────────────────────────
-
-    // ── DB BYPASS (dev only) ───────────────────────────────────────────────
-    // Skipping chat_messages history — no Supabase DB needed in dev.
-    // Uncomment below to restore persistent context:
-    // const { data: previousMessages } = await supabase.from('chat_messages')...
-    void devUserId; void sessionId; // suppress unused-var warnings
-    const contents: Array<{ role: string; parts: { text: string }[] }> = []
-    // ──────────────────────────────────────────────────────────────────────
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     
-    // Add the current message
+    const now = Date.now();
+    const rateLimitData = rateLimitMap.get(user.id) ?? { count: 0, lastReset: now };
+    if (now - rateLimitData.lastReset > RATE_LIMIT_WINDOW) { 
+      rateLimitData.count = 1; 
+      rateLimitData.lastReset = now; 
+    } else { 
+      rateLimitData.count++; 
+    }
+    rateLimitMap.set(user.id, rateLimitData);
+    if (rateLimitData.count > MAX_REQUESTS) {
+      return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
+    }
+
+    // Fetch previous messages for context
+    const { data: previousMessages } = await supabase
+      .from('messages')
+      .select('role, content')
+      .eq('session_id', sessionId)
+      .order('created_at', { ascending: true })
+
+    const contents: Array<{ role: string; parts: { text: string }[] }> = []
+
+    if (previousMessages) {
+      for (const msg of previousMessages) {
+        // Map 'assistant' from DB to 'model' for Gemini
+        const mappedRole = msg.role === 'assistant' ? 'model' : 'user';
+        contents.push({
+          role: mappedRole,
+          parts: [{ text: msg.content }]
+        })
+      }
+    }
+
+    // Insert user's new message into DB
+    await supabase.from('messages').insert({
+      session_id: sessionId,
+      user_id: user.id,
+      role: 'user',
+      content: message
+    })
+
+    // Add current message to contents array
     contents.push({
       role: 'user',
       parts: [{ text: message }]
@@ -91,7 +114,17 @@ export async function POST(req: Request) {
       }
     })
 
-    return NextResponse.json({ reply: response.text })
+    const replyText = response.text || "I'm having trouble understanding right now.";
+
+    // Insert assistant's reply into DB
+    await supabase.from('messages').insert({
+      session_id: sessionId,
+      user_id: user.id,
+      role: 'assistant',
+      content: replyText
+    })
+
+    return NextResponse.json({ reply: replyText })
   } catch (error) {
     console.error('Chat API Error:', error)
     return NextResponse.json(

@@ -16,7 +16,7 @@ export function VaultTimer() {
 
   const [vaultState, setVaultState] = useState<VaultState>('IDLE');
   const [stakeAmount, setStakeAmount] = useState<string>('0.05');
-  const [durationMinutes, setDurationMinutes] = useState<number>(15);
+  const [durationMinutes, setDurationMinutes] = useState<number>(10);
   
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const endTimeRef = useRef<number | null>(null);
@@ -106,10 +106,26 @@ export function VaultTimer() {
   };
 
   const handleReclaim = async () => {
-    // MOCK: In production, user calls the Anchor program's `reclaim_session`
-    // which transfers the escrowed SOL back to the user.
-    alert("Reclaim transaction simulated! Stake returned.");
-    setVaultState('IDLE');
+    try {
+      // 1. Sync with backend to award focus points and log session
+      const res = await fetch('/api/exercises/focus-points', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ duration_minutes: durationMinutes }),
+      });
+      
+      if (!res.ok) {
+        throw new Error('Failed to log focus session to backend');
+      }
+
+      // MOCK: In production, user calls the Anchor program's `reclaim_session`
+      // which transfers the escrowed SOL back to the user.
+      alert("Focus Session saved! Stake returned and Focus Points awarded.");
+      setVaultState('IDLE');
+    } catch (err) {
+      console.error(err);
+      alert("Failed to reclaim. Make sure you are logged in.");
+    }
   };
 
   // Format time
@@ -181,7 +197,7 @@ export function VaultTimer() {
                   <div className="space-y-2">
                     <label className="text-xs font-mono uppercase text-white/50 ml-1">Duration</label>
                     <div className="grid grid-cols-3 gap-2">
-                      {[15, 30, 60].map(mins => (
+                      {[5, 10, 20].map(mins => (
                         <button
                           key={mins}
                           onClick={() => setDurationMinutes(mins)}
