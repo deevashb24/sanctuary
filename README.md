@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <h1 align="center">🧘 Sanctuary — Solana Wellness & Fitness Platform</h1>
+  <p align="center"><strong>Web3-Powered Wellness with 3D Immersive Experiences</strong></p>
+  <p align="center">
+    A next-gen wellness and fitness platform built on Solana blockchain with immersive 3D experiences (React Three Fiber), AI-powered exercise analysis (Google GenAI), and on-chain reward systems. Features GSAP animations, Supabase backend, and Phantom wallet integration.
+  </p>
+</p>
 
-## Getting Started
+<p align="center">
+  <a href="https://sanctuary-flame-iota.vercel.app"><img src="https://img.shields.io/badge/🌐_Live-sanctuary.vercel.app-14F195?style=for-the-badge" alt="Live" /></a>
+</p>
 
-First, run the development server:
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-TypeScript-000000?logo=next.js&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/Solana-Blockchain-14F195?logo=solana&logoColor=white" alt="Solana" />
+  <img src="https://img.shields.io/badge/React_Three_Fiber-3D-000000?logo=three.js&logoColor=white" alt="R3F" />
+  <img src="https://img.shields.io/badge/Google_GenAI-AI-4285F4?logo=google&logoColor=white" alt="GenAI" />
+  <img src="https://img.shields.io/badge/Supabase-Backend-3FCF8E?logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/GSAP-Animations-88CE02?logo=greensock&logoColor=white" alt="GSAP" />
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Features
+
+- 🌐 **3D Immersive UI** — React Three Fiber + Drei for stunning 3D visual experiences with post-processing effects
+- 🧠 **AI Exercise Analysis** — Google GenAI-powered exercise recommendations and form analysis
+- 💎 **Solana Integration** — Anchor program for on-chain rewards, wallet adapter for Phantom/Solflare
+- 📊 **Exercise Tracking** — Supabase-backed exercise data with structured schemas
+- 🎨 **Premium Animations** — GSAP scroll-triggered animations and transitions
+- 🔐 **Web3 Auth** — Solana wallet-based authentication
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Framework** | Next.js (TypeScript) |
+| **3D Engine** | React Three Fiber + Drei + Postprocessing |
+| **Blockchain** | Solana (Anchor Programs) |
+| **AI** | Google GenAI (@google/genai) |
+| **Backend** | Supabase (PostgreSQL + Auth) |
+| **Animations** | GSAP + @gsap/react |
+| **UI** | Radix UI + Tailwind CSS |
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph TB
+    subgraph Frontend["🖥️ Next.js App"]
+        Landing[3D Landing<br/>React Three Fiber]
+        Exercises[Exercise Hub<br/>AI-Powered Analysis]
+        Wallet[Wallet Connect<br/>Phantom / Solflare]
+    end
+
+    subgraph AI["🧠 AI Layer"]
+        GenAI[Google GenAI<br/>Exercise Analysis]
+    end
+
+    subgraph Blockchain["⛓️ Solana"]
+        Anchor[Anchor Program<br/>On-Chain Rewards]
+        Devnet[Solana Devnet]
+    end
+
+    subgraph Backend["☁️ Supabase"]
+        DB[(PostgreSQL<br/>Exercise Data)]
+        Auth[Auth]
+    end
+
+    Landing --> Wallet
+    Wallet --> Anchor --> Devnet
+    Exercises --> GenAI
+    Exercises --> DB
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+sanctuary/
+├── src/                        # Next.js source
+├── anchor-program/             # Solana smart contract (Anchor)
+├── scripts/                    # Deployment & utility scripts
+├── supabase-schema.sql         # Database schema
+├── supabase-schema-exercises.sql # Exercise data schema
+├── public/                     # Static assets
+└── package.json
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Quick Start
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git clone https://github.com/deevashb24/sanctuary.git
+cd sanctuary
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Live at **[sanctuary-flame-iota.vercel.app](https://sanctuary-flame-iota.vercel.app)**
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License
+
+---
+
+<p align="center">
+  <strong>Find your sanctuary — on-chain wellness 🧘</strong>
+</p>
