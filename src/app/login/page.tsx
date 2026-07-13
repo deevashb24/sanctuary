@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
-import { createClient } from '@/utils/supabase/client'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Shield, Mail, Lock, User, ArrowRight, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
@@ -29,7 +28,6 @@ function LoginContent() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const supabase = createClient()
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -49,31 +47,22 @@ function LoginContent() {
     setLoading(true)
 
     try {
-      if (isSignUp) {
-        if (!fullName.trim()) {
-          throw new Error("Full name is required for registration.")
-        }
-        const { error: signUpError } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: { full_name: fullName },
-          },
-        })
-        if (signUpError) throw signUpError
-        // If email confirmation is required, this will not log them in automatically
-        // For this scaffold, we assume auto-login if confirm is disabled
-        router.push('/dashboard')
-        router.refresh()
-      } else {
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        })
-        if (signInError) throw signInError
-        router.push('/dashboard')
-        router.refresh()
+      const endpoint = isSignUp ? '/api/auth/signup' : '/api/auth/login'
+      const payload = isSignUp ? { email, password, fullName } : { email, password }
+      
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Authentication failed')
       }
+
+      router.push('/dashboard')
+      router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred.')
     } finally {
@@ -84,20 +73,7 @@ function LoginContent() {
   const handleGoogleSignIn = async () => {
     setError(null)
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          // Must point to the callback route — this exchanges the OAuth
-          // code for a session cookie. Sending directly to /dashboard
-          // skips the code exchange and leaves the user unauthenticated.
-          redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
-        },
-      })
-      if (error) throw error
+      window.location.href = '/api/auth/google'
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Google sign-in failed.')
     }

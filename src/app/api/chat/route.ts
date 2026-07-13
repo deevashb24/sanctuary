@@ -7,10 +7,7 @@ import { z } from 'zod'
 // Initialize the SDK. It automatically picks up GEMINI_API_KEY from environment variables.
 const ai = new GoogleGenAI({})
 
-// Basic In-Memory Rate Limiting
-const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
-const RATE_LIMIT_WINDOW = 10 * 1000; // 10 seconds
-const MAX_REQUESTS = 5;
+import { apiRateLimiter } from '@/utils/rate-limit'
 
 // Zod Schema
 const chatRequestSchema = z.object({
@@ -32,8 +29,8 @@ export async function POST(req: Request) {
     // Server-side auth check
     const cookieStore = await cookies()
     const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://dummy-url.supabase.co',
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy_anon_key',
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
         cookies: {
           getAll() {
@@ -56,16 +53,8 @@ export async function POST(req: Request) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     
-    const now = Date.now();
-    const rateLimitData = rateLimitMap.get(user.id) ?? { count: 0, lastReset: now };
-    if (now - rateLimitData.lastReset > RATE_LIMIT_WINDOW) { 
-      rateLimitData.count = 1; 
-      rateLimitData.lastReset = now; 
-    } else { 
-      rateLimitData.count++; 
-    }
-    rateLimitMap.set(user.id, rateLimitData);
-    if (rateLimitData.count > MAX_REQUESTS) {
+    const rateLimitResult = apiRateLimiter(user.id)
+    if (!rateLimitResult.success) {
       return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
     }
 
